@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rep="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/data/jpa
+        https://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <context:component-scan base-package="ru.webproject"/>
+    <context:property-placeholder location="WEB-INF/jdbc.properties"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property value="${jdbc.driver}" name="driverClassName"/>
+        <property value="${jdbc.url}" name="url"/>
+        <property value="${jdbc.username}" name="username"/>
+        <property value="${jdbc.password}" name="password"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="ru.webproject"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true"/>
+                <property name="showSql" value="true"/>
+            </bean>
+        </property>
+    </bean>
+
+    <rep:repositories base-package="ru.webproject"/>
+
+    <bean name="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>
