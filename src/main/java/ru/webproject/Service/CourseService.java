@@ -1,13 +1,15 @@
 package ru.webproject.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.webproject.Domain.Course;
 import ru.webproject.Domain.Teacher;
 import ru.webproject.Repository.CourseRepository;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -30,12 +32,23 @@ public class CourseService {
         return StreamSupport.stream(repository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
-    public void saveCourse(Course course) {
-        repository.save(course);
+    public Course saveCourse(Course course) {
+        return repository.save(course);
     }
 
     public List<Teacher> findTeacherByCourseName(String name) {
         return repository.findAllByName(name).stream().map(course -> course.getTeacher()).collect(Collectors.toList());
+    }
+
+    public long count() {
+        return repository.count();
+    }
+
+    public List<Course> getPage(Integer nPage, Integer pageSize) {
+        Pageable pageable = PageRequest.of(nPage, pageSize);
+        Page<Course> page = repository.findAll(pageable);
+        if (page.hasContent()) return page.getContent();
+        else return Collections.EMPTY_LIST;
     }
 
 

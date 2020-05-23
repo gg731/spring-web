@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseRepository extends PagingAndSortingRepository<Course, Integer> {
 
     List<Course> findAllByName(String name);
+
 }

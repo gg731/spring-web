@@ -21,4 +21,45 @@ public class Student {
 
     @Column(name = "score")
     private Long score;
+
+    public Student() {
+    }
+
+    public Student(String name, Date birth, Long score) {
+        this.name = name;
+        this.birth = birth;
+        this.score = score;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
+    }
 }

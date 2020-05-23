@@ -1,0 +1,52 @@
+package ru.webproject.Controller;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+
+@Controller
+public class LoginController {
+
+
+    @Resource(name = "authenticationManager")
+    private AuthenticationManager authenticationManager;
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
+
+    @PostMapping("/authenticate")
+    public String authenticate(@RequestParam("username") final String username,
+                               @RequestParam("password") final String password,
+                               final HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken authReq
+                = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication auth = null;
+        try {
+            auth = authenticationManager.authenticate(authReq);
+        } catch (AuthenticationException e) {
+            return "redirect:/login?error=true";
+        }
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(auth);
+        HttpSession session = request.getSession(true);
+        return "redirect:/courses/add";
+    }
+
+
+}
+

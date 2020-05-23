@@ -1,16 +1,14 @@
 package ru.webproject.Controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.webproject.Domain.Course;
 import ru.webproject.Service.CourseService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Controller
 public class CourseController {
@@ -20,19 +18,25 @@ public class CourseController {
 
 
     @GetMapping("/courses")
-    public String courses(Model model) {
-        model.addAttribute("courses", service.findAllCourse());
-        return "/jsp/courses";
+    public String courses(@RequestParam(name = "nPage", defaultValue = "0") Integer nPage,
+                          @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize,
+                          Model model) {
+        model.addAttribute("courses", service.getPage(nPage, pageSize));
+        model.addAttribute("pages", new Integer[(int) Math.ceil((double) service.count() / 5)]);
+        return "courses";
     }
 
-    @GetMapping("/courseName")
-    public String teacherByCourseName(@RequestParam(value = "name", defaultValue = "java") String name, Model model) {
-        model.addAttribute("courses", service.findTeacherByCourseName(name));
-        return "/jsp/courses";
+
+    @GetMapping("courses/add")
+    public String addCourse() {
+        return "create-course";
     }
 
-    @PostMapping("/courses/add")
-    public void addCourse(@RequestBody Course course) {
-        service.saveCourse(course);
+
+    @Secured("ROLE_ADMIN")
+    @PostMapping("/createCourse")
+    public String create(@RequestParam("name") String name, @RequestParam("duration") Integer duration) {
+        service.saveCourse(new Course(name, duration));
+        return "redirect:/courses";
     }
 }
