@@ -27,6 +27,7 @@ public class CourseController {
     }
 
 
+
     @GetMapping("courses/add")
     public String addCourse() {
         return "create-course";

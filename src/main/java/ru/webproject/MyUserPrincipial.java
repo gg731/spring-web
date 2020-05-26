@@ -18,13 +18,20 @@ public class MyUserPrincipial implements UserDetails {
 
     private User user;
 
+    private Collection<? extends GrantedAuthority> authorities;
+
     public MyUserPrincipial(User user) {
         this.user = user;
     }
 
+    public MyUserPrincipial(User user, List<Authority> authorities) {
+        this.user = user;
+        this.authorities = authorities.stream().map(c -> new SimpleGrantedAuthority(c.getAuthority())).collect(Collectors.toList());
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return authorities;
     }
 
     @Override

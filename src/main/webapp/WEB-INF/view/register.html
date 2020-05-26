@@ -3,44 +3,35 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <title>Students</title>
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/js/functions.js}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <div th:replace="static/menu"/>
-<div style="margin-left: 13%;width: 74%">
-    <h1>Students list</h1>
+<div style="margin-left: 13%;width: 74%;text-align: -moz-center">
+    <h1>Register</h1>
+    <h5 th:text="${error}" style="color: red"/>
+    <form method="post" action="/register" style="width: 25%">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" required id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="pas1">Password</label>
+            <input type="password" class="form-control" required id="pas1" name="pas1">
+        </div>
+        <div class="form-group">
+            <label for="pas2">Password</label>
+            <input type="password" class="form-control" required id="pas2" name="pas2">
+        </div>
 
-    <table class="table ">
-        <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Birth</th>
-            <th scope="col">Score</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="student : ${students}">
-            <td th:text="${student.name}"/>
-            <td th:text="${student.birth}"/>
-            <td th:text="${student.score}"/>
-        </tr>
-        </tbody>
-    </table>
-    <nav aria-label="Page navigation example" style="display: ruby-base-container">
-        <ul class="pagination">
-            <li class="page-item" th:each="page, iterStat : ${pages}">
-                <a class="page-link" th:href="@{/courses(nPage=${iterStat.index})}"
-                   th:text="${iterStat.index+1}"></a>
-            </li>
-        </ul>
-    </nav>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="btn btn-primary" href="/students/add" role="button">Create student</a>
-    </div>
-
+        <button type="submit" class="btn btn-primary" style="text-align: right">Create account</button>
+    </form>
 </div>
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

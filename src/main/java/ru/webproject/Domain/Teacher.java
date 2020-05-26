@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "teacher")
-@Data
 public class Teacher {
 
     @Id
@@ -19,4 +18,35 @@ public class Teacher {
     @Column(name = "about")
     private String about;
 
+    public Teacher() {
+    }
+
+    public Teacher(String fio, String about) {
+        this.fio = fio;
+        this.about = about;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFio() {
+        return fio;
+    }
+
+    public void setFio(String fio) {
+        this.fio = fio;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 }

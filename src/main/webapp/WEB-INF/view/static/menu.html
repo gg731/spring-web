@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<nav class="navbar navbar-dark bg-primary" style="text-align: center">
+    <div class="dropdown" style="margin-left: auto">
+        <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">Menu</a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="/students">Students</a>
+            <a class="dropdown-item" href="/teachers">Teachers</a>
+            <a class="dropdown-item" href="/courses">Courses</a>
+        </div>
+        <a sec:authorize="isAuthenticated()" href="/students">
+            <button type="button" class="btn btn-dark"><span
+                    th:text="${session.user}"/>
+            </button>
+        </a>
+        <a sec:authorize="isAnonymous()" href="/login">
+            <button type="button" class="btn btn-dark"><span
+            >Login</span>
+            </button>
+        </a>
+    </div>
+
+</nav>
+
+</html>

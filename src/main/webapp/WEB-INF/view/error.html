@@ -1,32 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
-    <title>Students</title>
+    <title>Error</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
-<div th:replace="static/menu"/>
-<div style="margin-left: 13%;width: 74%">
-    <h1>New student creation form</h1>
-    <form method="post" action="/createStudent">
-        <div class="form-group">
-            <label for="name">Name student</label>
-            <input type="text" class="form-control" required id="name" name="name">
-        </div>
-        <div class="form-group">
-            <label for="birth">Duration</label>
-            <input type="date" class="form-control" required id="birth" name="birth">
-        </div>
-        <div class="form-group">
-            <label for="score">Score</label>
-            <input type="number" class="form-control" required id="score" name="score">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Create student</button>
-    </form>
-</div>
+<div th:replace="static/menu"></div>
+<h1 th:text="${err}"/>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

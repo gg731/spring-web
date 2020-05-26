@@ -41,7 +41,6 @@ public class StudentController {
                                 @RequestParam("score") int score) {
 
         service.saveStudent(new Student(name, birth, (long) score));
-        System.out.println(name + birth + score);
         return "redirect:/students";
     }
 

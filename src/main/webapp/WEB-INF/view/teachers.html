@@ -10,34 +10,33 @@
 <body>
 <div th:replace="static/menu"/>
 <div style="margin-left: 13%;width: 74%">
-    <h1>Students list</h1>
+    <h1>Teachers list</h1>
 
     <table class="table ">
         <thead>
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Birth</th>
-            <th scope="col">Score</th>
+            <th scope="col">FIO</th>
+            <th scope="col">About teacher</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="student : ${students}">
-            <td th:text="${student.name}"/>
-            <td th:text="${student.birth}"/>
-            <td th:text="${student.score}"/>
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.fio}"/>
+            <td th:text="${teacher.about}"/>
+
         </tr>
         </tbody>
     </table>
-    <nav aria-label="Page navigation example" style="display: ruby-base-container">
-        <ul class="pagination">
-            <li class="page-item" th:each="page, iterStat : ${pages}">
-                <a class="page-link" th:href="@{/courses(nPage=${iterStat.index})}"
-                   th:text="${iterStat.index+1}"></a>
-            </li>
-        </ul>
-    </nav>
+<!--    <nav aria-label="Page navigation example" style="display: ruby-base-container">-->
+<!--        <ul class="pagination">-->
+<!--            <li class="page-item" th:each="page, iterStat : ${pages}">-->
+<!--                <a class="page-link" th:href="@{/courses(nPage=${iterStat.index})}"-->
+<!--                   th:text="${iterStat.index+1}"></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
     <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="btn btn-primary" href="/students/add" role="button">Create student</a>
+        <a class="btn btn-primary" href="/teachers/add" role="button">Create teacher</a>
     </div>
 
 </div>

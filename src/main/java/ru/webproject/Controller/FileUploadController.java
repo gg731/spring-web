@@ -13,6 +13,9 @@ import java.io.IOException;
 @Controller
 public class FileUploadController {
 
+    @GetMapping("/files")
+    public String filesPage(){ return "upload-file";}
+
     @PostMapping("/uploadFile")
     public String uploadFile(@RequestParam("file") MultipartFile file,
                              @RequestParam("name") String name,

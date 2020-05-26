@@ -19,6 +19,9 @@ public class UserDetailService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -27,6 +30,7 @@ public class UserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
 
-        return new MyUserPrincipial(user);
+       List<Authority> f = authorityRepository.findAllByUsername(user.getUsername());
+        return new MyUserPrincipial(user,f);
     }
 }
