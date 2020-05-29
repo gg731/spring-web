@@ -10,21 +10,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.webproject.Domain.Authority;
 import ru.webproject.Domain.User;
 import ru.webproject.MyUserPrincipial;
-import ru.webproject.Repository.AuthorityRepository;
-import ru.webproject.Repository.UserRepository;
 import ru.webproject.Service.AuthorityService;
 import ru.webproject.Service.UserService;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.nio.file.attribute.UserPrincipal;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -67,9 +62,9 @@ public class LoginController {
         sc.setAuthentication(auth);
         HttpSession session = request.getSession(true);
         MyUserPrincipial principal = (MyUserPrincipial) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        session.setAttribute("user", principal.getUsername());
+        session.setAttribute("user", userService.findByUsername(principal.getUsername()));
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-        return "redirect:/courses";
+        return "redirect:/profile";
     }
 
     @GetMapping("register")
@@ -91,8 +86,15 @@ public class LoginController {
         } else {
             userService.saveUser(new User(username, new BCryptPasswordEncoder().encode(pas1), true));
             authorityService.setAuthority(new Authority(username, "ROLE_USER"));
-            return "redirect:courses";
+            return "redirect:profile/";
         }
+    }
+
+
+    @PostMapping("logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 
 

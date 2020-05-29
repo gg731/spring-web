@@ -18,6 +18,10 @@ public class User {
     private Boolean enabled;
     private Boolean isExpired;
     private Date lastLogin;
+    private String about;
+    private String email;
+    private String name;
+    private String photoUrl;
 
     public User() {
     }
@@ -55,5 +59,29 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

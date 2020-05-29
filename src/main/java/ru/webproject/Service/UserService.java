@@ -21,5 +21,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void updateUser(String email, String name, String username) {
+        userRepository.updateUser(email, name, username);
+    }
+
 
 }

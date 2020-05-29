@@ -31,7 +31,7 @@
     <nav aria-label="Page navigation example" style="display: ruby-base-container">
         <ul class="pagination">
             <li class="page-item" th:each="page, iterStat : ${pages}">
-                <a class="page-link" th:href="@{/courses(nPage=${iterStat.index})}"
+                <a class="page-link" th:href="@{/students(nPage=${iterStat.index})}"
                    th:text="${iterStat.index+1}"></a>
             </li>
         </ul>
